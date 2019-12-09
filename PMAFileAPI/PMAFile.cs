@@ -57,7 +57,13 @@ namespace PMAFileAPI
                 if (isNode)
                 {
                     // It's a node
-                    PMANode node = new PMANode();
+                    PMANode node;
+                    if (line.StartsWith("IObjeto")) {
+                        node = new PMAObject();
+                    } else {
+                        node = new PMANode();
+                    }
+
                     node.level = level;
                     if (line.Contains(" - "))
                     {
