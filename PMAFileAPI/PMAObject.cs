@@ -7,17 +7,32 @@ namespace PMAFileAPI
 {
     public class PMAObject : PMANode
     {
-        public PMANode common = null;
-        public PMANode specific = null;
-
-        public void init()
-        {
-            common = getNodeByName("DadosComuns");
-            specific = getNodeByName("DadosEspecificos");
-        }
+        private PMANode common = null;
+        private PMANode specific = null;
 
         public string getType() {
-            return common.properties["Tipo"];
+            return getCommon().properties["Tipo"];
         }
+
+        public PMANode getCommon()
+        {
+            if (common == null)
+                common = getNodeByType("DadosComuns");
+
+            if (common == null)
+                throw new FormatException();
+            return common;
+        }
+
+        public PMANode getSpecific()
+        {
+            if (specific == null)
+                specific = getNodeByType("DadosEspecificos");
+
+            if (specific == null)
+                throw new FormatException();
+            return specific;
+        }
+
     }
 }
